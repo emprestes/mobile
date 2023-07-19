@@ -1,0 +1,12 @@
+DROP TABLE IF EXISTS tb_mobile;
+CREATE TABLE IF NOT EXISTS tb_mobile (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR2(256) NOT NULL,
+    brand VARCHAR2(256) NOT NULL,
+    technology VARCHAR2(256) NOT NULL,
+    band2g VARCHAR2(256) NOT NULL,
+    band3g VARCHAR2(256) NOT NULL,
+    band4g VARCHAR2(256) NOT NULL,
+    booked_on DATETIME,
+    booked_by VARCHAR2(256)
+);

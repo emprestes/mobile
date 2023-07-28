@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*
 import reactor.kotlin.core.publisher.toMono
 
 @RestController
-@RequestMapping("/v1/device")
+@RequestMapping("/v1/devices")
 class MobileService(
     @Qualifier("fonoClient")
     private val fonoClient: IWebClient,
@@ -19,7 +19,7 @@ class MobileService(
     private val repository: IMobileRepository
 ) {
 
-    @GetMapping("/devices")
+    @GetMapping("")
     suspend fun loadAll() = repository.findAll()
 
     @PostMapping("/book/{brand}/{device}/{bookedBy}")
@@ -36,16 +36,17 @@ class MobileService(
     private suspend fun book(brand: String, device: String, bookedBy: String, client: IWebClient) =
         withContext(Dispatchers.IO) {
             repository.findOneBy(brand, device)
-                .filter { it.isBooked }
-                .or(client
+                .map { it.bookedBy(bookedBy) }
+                .flatMap(repository::save)
+                .block()
+                ?.let { it.toMono() }
+                ?: client
                     .findOne(brand, device)
                     .map { mapToMobile(it) }
                     .map { it.bookedBy(bookedBy) }
                     .flatMap(repository::save)
-                    .log()
                     .block()
                     .toMono()
-                )
         }
 
     @PostMapping("/return/{brand}/{device}")

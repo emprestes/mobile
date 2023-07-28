@@ -12,6 +12,4 @@ interface IMobileRepository : ReactiveCrudRepository<Mobile, Long> {
 
     @Query("SELECT * FROM tb_mobile WHERE brand = :brand AND name = :device")
     fun findOneBy(brand: String, device: String): Mono<Mobile>
-
-    fun existsByName(name: String): Boolean
 }

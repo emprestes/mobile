@@ -9,7 +9,7 @@ import java.time.LocalDateTime
 @Table("tb_mobile")
 data class Mobile(
     @Id
-    private val id: Long? = null,
+    val id: Long? = null,
     override val name: String,
     override val brand: String,
     override val technology: String,
@@ -19,7 +19,7 @@ data class Mobile(
     @Column("booked_on")
     override val bookedOn: LocalDateTime? = null,
     @Column("booked_by")
-    override var bookedBy: String? = null
+    override val bookedBy: String? = null
 ) : IMobile {
 
     override val isBooked
@@ -28,12 +28,19 @@ data class Mobile(
     override val availability
         get() = bookedOn == null && bookedBy == null
 
-    override fun bookedBy(name: String) = copy(
-        bookedOn = LocalDateTime.now(),
-        bookedBy = name
-    )
+    override fun bookedBy(name: String) =
+        if (isBooked) {
+            this
+        } else {
+            copy(
+                id = id,
+                bookedOn = LocalDateTime.now(),
+                bookedBy = name
+            )
+        }
 
     override fun released() = copy(
+        id = id,
         bookedOn = null,
         bookedBy = null
     )

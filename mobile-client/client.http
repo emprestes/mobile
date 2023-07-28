@@ -1,11 +1,11 @@
 ###
-POST http://localhost:8080/v1/device/book/Samsung/GalaxyS8/Edson
+POST http://localhost:8080/v1/devices/book/Samsung/GalaxyS8/Edson
 
 ###
-GET http://localhost:8080/v1/device/devices
+POST http://localhost:8080/v1/devices/return/Samsung/GalaxyS8
+
+###
+GET http://localhost:8080/v1/devices
 
 ###
 GET http://localhost:8070/v1/getdevice/Samsung/GalaxyS8
-
-###
-POST http://localhost:8080/v1/device/return/Samsung/GalaxyS8

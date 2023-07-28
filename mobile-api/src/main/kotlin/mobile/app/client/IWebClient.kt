@@ -1,9 +1,9 @@
 package mobile.app.client
 
 import domail.IDevice
-import reactor.core.publisher.Flux
+import reactor.core.publisher.Mono
 
 interface IWebClient {
 
-    suspend fun findOne(brand: String, device: String): Flux<out IDevice>
+    suspend fun findOne(brand: String, device: String): Mono<out IDevice>
 }

@@ -16,5 +16,6 @@ class DeviceService(
     suspend fun findAll() = repository.findAll()
 
     @GetMapping("/getdevice/{brand}/{device}")
-    suspend fun getDevice(@PathVariable brand: String, @PathVariable device: String) = repository.findOneBy(brand, device)
+    suspend fun getDevice(@PathVariable brand: String, @PathVariable device: String) = repository
+        .findOneBy(brand, device)?.log()
 }

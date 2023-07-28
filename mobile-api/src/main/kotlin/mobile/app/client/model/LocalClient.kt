@@ -1,10 +1,11 @@
 package mobile.app.client.model
 
 import mobile.app.client.IWebClient
-import mobile.domain.model.Device
+import mobile.app.mapper.mapToDevice
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
+import reactor.kotlin.core.publisher.toMono
 
 @Component
 class LocalClient(
@@ -15,5 +16,7 @@ class LocalClient(
     override suspend fun findOne(brand: String, device: String) = client.get()
         .uri("/v1/getdevice/{brand}/{device}", brand, device)
         .retrieve()
-        .bodyToFlux(Device::class.java)
+        .bodyToFlux(HashMap::class.java)
+        .map { mapToDevice(it) }
+        .toMono()
 }

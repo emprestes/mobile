@@ -22,6 +22,9 @@ data class Mobile(
     override var bookedBy: String? = null
 ) : IMobile {
 
+    override val isBooked
+        get() = bookedOn != null
+
     override val availability
         get() = bookedOn == null && bookedBy == null
 

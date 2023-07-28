@@ -13,6 +13,8 @@ interface IMobile {
     val bookedBy: CharSequence?
     val availability: Boolean
 
+    val isBooked: Boolean
+
     fun bookedBy(name: String): IMobile
 
     fun released(): IMobile
